@@ -1,0 +1,8 @@
+export enum TipoServicio {
+  CORTE = 'CORTE',
+  BARBA = 'BARBA',
+  CORTE_Y_BARBA = 'CORTE_Y_BARBA',
+  CEJAS = 'CEJAS',
+  MASCARILLA = 'MASCARILLA',
+  COLORIMETRIA = 'COLORIMETRIA'
+}

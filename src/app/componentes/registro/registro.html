@@ -1,0 +1,76 @@
+<main class="page-shell">
+  <section class="auth-card auth-card-wide">
+    <div class="auth-header">
+      <div class="brand-icon"><i class="fa-solid fa-user-plus"></i></div>
+      <h1>Crear cuenta</h1>
+      <p>Regístrate y empieza a disfrutar de nuestros servicios premium.</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="submit()" class="form-grid">
+      <label class="field-group">
+        <span>Cédula</span>
+        <input type="text" formControlName="cedula" placeholder="1234567890">
+        @if (cedula?.invalid && (cedula?.dirty || cedula?.touched)) {
+          <small class="field-error">La cédula es obligatoria.</small>
+        }
+      </label>
+
+      <label class="field-group">
+        <span>Nombre</span>
+        <input type="text" formControlName="nombre" placeholder="Tu nombre completo">
+        @if (nombre?.invalid && (nombre?.dirty || nombre?.touched)) {
+          <small class="field-error">El nombre es obligatorio.</small>
+        }
+      </label>
+
+      <label class="field-group">
+        <span>Email</span>
+        <input type="email" formControlName="email" placeholder="tucorreo@ejemplo.com">
+        @if (email?.invalid && (email?.dirty || email?.touched)) {
+          <small class="field-error" *ngIf="email?.errors?.['required']">El email es obligatorio.</small>
+          <small class="field-error" *ngIf="email?.errors?.['email']">Ingresa un email válido.</small>
+        }
+      </label>
+
+      <label class="field-group">
+        <span>Dirección</span>
+        <input type="text" formControlName="direccion" placeholder="Tu dirección">
+        @if (direccion?.invalid && (direccion?.dirty || direccion?.touched)) {
+          <small class="field-error">La dirección es obligatoria.</small>
+        }
+      </label>
+
+      <label class="field-group">
+        <span>Teléfono</span>
+        <input type="tel" formControlName="telefono" placeholder="3111234567" maxlength="10">
+        @if (telefono?.invalid && (telefono?.dirty || telefono?.touched)) {
+          <small class="field-error" *ngIf="telefono?.errors?.['required']">El teléfono es obligatorio.</small>
+          <small class="field-error" *ngIf="telefono?.errors?.['maxlength']">Máximo 10 dígitos.</small>
+        }
+      </label>
+
+      <label class="field-group">
+        <span>Contraseña</span>
+        <input type="password" formControlName="password" placeholder="●●●●●●●">
+        @if (password?.invalid && (password?.dirty || password?.touched)) {
+          <small class="field-error" *ngIf="password?.errors?.['required']">La contraseña es obligatoria.</small>
+          <small class="field-error" *ngIf="password?.errors?.['minlength']">Mínimo 7 caracteres.</small>
+        }
+      </label>
+
+      <label class="field-group">
+        <span>Confirmar contraseña</span>
+        <input type="password" formControlName="confirmaPassword" placeholder="●●●●●●●">
+        @if ((confirmaPassword?.dirty || confirmaPassword?.touched) && registerForm.errors?.['passwordsMismatch']) {
+          <small class="field-error">Las contraseñas deben coincidir.</small>
+        }
+      </label>
+
+      <button type="submit" class="btn btn-primary">Registrarme</button>
+
+      <div class="auth-footer">
+        <p>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+      </div>
+    </form>
+  </section>
+</main>
