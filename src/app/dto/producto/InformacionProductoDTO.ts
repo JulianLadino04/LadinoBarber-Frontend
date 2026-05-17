@@ -1,5 +1,4 @@
 export interface InformacionProductoDTO {
-  id: string
   nombre: string
   descripcion: string
   marca: string
@@ -7,5 +6,4 @@ export interface InformacionProductoDTO {
   stock: number
   imagenUrl: string
   activo: boolean
-  fechaCreacion: string
 }

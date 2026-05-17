@@ -6,29 +6,48 @@
       <p>Accede a tu cuenta y reserva tu próxima cita.</p>
     </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="submit()" class="form-grid">
+    <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()" class="form-grid">
+
       <label class="field-group">
         <span>Email</span>
         <input type="email" formControlName="correo" placeholder="tucorreo@ejemplo.com">
-        @if (correo?.invalid && (correo?.dirty || correo?.touched)) {
-          <small class="field-error" *ngIf="correo?.errors?.['required']">El email es obligatorio.</small>
-          <small class="field-error" *ngIf="correo?.errors?.['email']">Ingresa un email válido.</small>
+
+        @if (loginForm.get('correo')?.invalid && (loginForm.get('correo')?.dirty || loginForm.get('correo')?.touched)) {
+          <small class="field-error" *ngIf="loginForm.get('correo')?.errors?.['required']">
+            El email es obligatorio.
+          </small>
+
+          <small class="field-error" *ngIf="loginForm.get('correo')?.errors?.['email']">
+            Ingresa un email válido.
+          </small>
         }
       </label>
+
 
       <label class="field-group">
         <span>Contraseña</span>
         <input type="password" formControlName="contrasena" placeholder="●●●●●●●" autocomplete="current-password">
-        @if (contrasena?.invalid && (contrasena?.dirty || contrasena?.touched)) {
-          <small class="field-error" *ngIf="contrasena?.errors?.['required']">La contraseña es obligatoria.</small>
+
+        @if (loginForm.get('contrasena')?.invalid && (loginForm.get('contrasena')?.dirty || loginForm.get('contrasena')?.touched)) {
+          <small class="field-error" *ngIf="loginForm.get('contrasena')?.errors?.['required']">
+            La contraseña es obligatoria.
+          </small>
         }
+
+        <a routerLink="/recuperar-password" class="forgot-password">
+          ¿Olvidaste tu contraseña?
+        </a>
       </label>
 
-      <button type="submit" class="btn btn-primary">Ingresar</button>
+
+      <button type="submit" class="btn btn-primary">
+        Ingresar
+      </button>
 
       <div class="auth-footer">
         <p>¿No tienes cuenta? <a routerLink="/registro">Regístrate</a></p>
       </div>
+
     </form>
   </section>
 </main>

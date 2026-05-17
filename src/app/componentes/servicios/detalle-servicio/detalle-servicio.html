@@ -1,0 +1,28 @@
+<div class="page-shell">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="brand-icon">SB</div>
+      <h1>Detalle Servicio</h1>
+    </div>
+
+    <div *ngIf="servicio; else loading">
+      <p><strong>Nombre:</strong> {{servicio?.nombre}}</p>
+      <p><strong>Descripción:</strong> {{servicio?.descripcion}}</p>
+      <p><strong>Tipo:</strong> {{servicio?.tipo}}</p>
+      <p><strong>Precio:</strong> {{servicio?.precio | currency}}</p>
+      <p><strong>Duración:</strong> {{servicio?.duracionMinutos}} minutos</p>
+      <p><strong>Estado:</strong> {{servicio?.activo ? 'Activo' : 'Inactivo'}}</p>
+      <div class="img-wrap" *ngIf="servicio?.imagenUrl"><img [src]="servicio?.imagenUrl" alt="imagen servicio"/></div>
+
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn" (click)="editar()">Editar</button>
+        <button class="btn" (click)="volver()">Volver</button>
+      </div>
+    </div>
+
+    <ng-template #loading>
+      <p>Cargando...</p>
+    </ng-template>
+
+  </div>
+</div>

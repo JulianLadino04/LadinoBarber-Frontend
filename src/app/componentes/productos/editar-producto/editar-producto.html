@@ -1,0 +1,36 @@
+<div class="page-shell">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="brand-icon">PB</div>
+      <h1>Editar Producto</h1>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+      <div class="field-group">
+        <span>Nombre</span>
+        <input formControlName="nombre" />
+      </div>
+
+      <div class="field-group">
+        <span>Descripción</span>
+        <input formControlName="descripcion" />
+      </div>
+
+      <div class="field-group">
+        <span>Precio</span>
+        <input type="number" formControlName="precio" />
+      </div>
+
+      <div class="field-group">
+        <span>Imagen URL</span>
+        <input formControlName="imagenUrl" />
+      </div>
+
+      <div class="field-group">
+        <label><input type="checkbox" formControlName="activo" /> Activo</label>
+      </div>
+
+      <button class="btn" type="submit">Guardar Cambios</button>
+    </form>
+  </div>
+</div>

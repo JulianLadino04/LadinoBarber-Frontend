@@ -1,5 +1,4 @@
 export interface EditarProductoDTO {
-  id: string
   nombre: string
   descripcion: string
   marca: string

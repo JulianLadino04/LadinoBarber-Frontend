@@ -1,7 +1,10 @@
+import { TipoServicio } from "../enums/TipoServicio-enum"
+
 export interface ItemServicioDTO {
-  id: string
   nombre: string
+  descripcion: string
+  tipo: TipoServicio
   precio: number
   duracionMinutos: number
-  activo: boolean
+  imagenUrl: string
 }

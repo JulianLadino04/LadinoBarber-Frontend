@@ -8,7 +8,7 @@ const TOKEN_KEY = "AuthToken";
 })
 export class Token {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   public setToken(token: string) {
 
@@ -30,7 +30,13 @@ export class Token {
   }
 
   public isLogged(): boolean {
-    return this.getToken() != null;
+
+    if (typeof window !== 'undefined') {
+      return !!window.sessionStorage.getItem(TOKEN_KEY);
+    }
+
+    return false;
+
   }
 
   public login(token: string) {
@@ -38,15 +44,9 @@ export class Token {
     this.setToken(token);
 
     const rol = this.getRol();
-    let destino = rol == "ADMINISTRADOR" ? "/panel-admin" : "/";
+    const destino = rol === "ADMINISTRADOR" ? "/panel-admin" : "/";
 
-    this.router.navigate([destino]).then(() => {
-
-      if (typeof window !== 'undefined') {
-        window.location.reload();
-      }
-
-    });
+    this.router.navigate([destino]);
 
   }
 
@@ -68,18 +68,12 @@ export class Token {
 
     const payload = token.split(".")[1];
 
-    if (!payload) {
-      return {};
-    }
-
     try {
 
       const payloadDecoded = atob(payload);
-      const values = JSON.parse(payloadDecoded);
+      return JSON.parse(payloadDecoded);
 
-      return values;
-
-    } catch (e) {
+    } catch {
       return {};
     }
 
@@ -91,7 +85,7 @@ export class Token {
 
     if (token) {
       const values = this.decodePayload(token);
-      return values.id;
+      return values.id || "";
     }
 
     return "";
@@ -104,7 +98,7 @@ export class Token {
 
     if (token) {
       const values = this.decodePayload(token);
-      return values.rol;
+      return values.rol || "";
     }
 
     return "";
@@ -117,7 +111,7 @@ export class Token {
 
     if (token) {
       const values = this.decodePayload(token);
-      return values.sub;
+      return values.sub || "";
     }
 
     return "";

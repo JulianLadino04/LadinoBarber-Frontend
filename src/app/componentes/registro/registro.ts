@@ -30,31 +30,23 @@ export class Registro {
     private authService: Auth,
     private router: Router
   ) {
+
     this.registerForm = this.fb.group({
-      cedula: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      direccion: ['', [Validators.required]],
       telefono: ['', [Validators.required, Validators.maxLength(10)]],
-      password: ['', [Validators.required, Validators.minLength(7)]],
+      correo: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       confirmaPassword: ['', [Validators.required]]
     }, { validators: passwordMatchValidator() });
-  }
 
-  get cedula() {
-    return this.registerForm.get('cedula');
   }
 
   get nombre() {
     return this.registerForm.get('nombre');
   }
 
-  get email() {
-    return this.registerForm.get('email');
-  }
-
-  get direccion() {
-    return this.registerForm.get('direccion');
+  get correo() {
+    return this.registerForm.get('correo');
   }
 
   get telefono() {
@@ -70,20 +62,38 @@ export class Registro {
   }
 
   submit() {
+
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
       return;
     }
 
-    this.authService.crearCuenta(this.registerForm.value).subscribe({
+    const form = this.registerForm.value;
+
+    const dto = {
+      nombre: form.nombre,
+      telefono: form.telefono,
+      correo: form.correo,
+      password: form.password
+    };
+
+    this.authService.crearCuenta(dto).subscribe({
       next: () => {
-        Swal.fire('Registrado', 'Cuenta creada con éxito. Ya puedes iniciar sesión.', 'success')
-          .then(() => this.router.navigate(['/login']));
+        Swal.fire(
+          'Registrado',
+          'Cuenta creada con éxito. Ya puedes iniciar sesión.',
+          'success'
+        ).then(() => this.router.navigate(['/login']));
       },
       error: (error) => {
-        Swal.fire('Error', error?.error?.message || 'No fue posible crear la cuenta.', 'error');
+        Swal.fire(
+          'Error',
+          error?.error?.respuesta || 'No fue posible crear la cuenta.',
+          'error'
+        );
       }
     });
+
   }
 
 }

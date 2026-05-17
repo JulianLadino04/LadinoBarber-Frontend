@@ -1,31 +1,147 @@
 <header class="main-header">
   <div class="header-container">
-    <a routerLink="/" class="brand-link">
-      <div class="brand-mark"><i class="fa-solid fa-scissors"></i></div>
-      <div class="brand-copy">
-        <span class="brand-title">Ladino Barber</span>
-        <span class="brand-subtitle">Estilo profesional</span>
-      </div>
-    </a>
 
-    <nav class="nav-panel">
-      <a routerLink="/">Inicio</a>
-      <a routerLink="/" fragment="servicios">Servicios</a>
-      <a routerLink="/" fragment="barberos">Barberos</a>
-      <a routerLink="/" fragment="reservas">Reservas</a>
-    </nav>
+    <!-- IZQUIERDA -->
+    <div class="brand-panel">
 
-    <div class="actions-section">
-      @if (!isLogged) {
-        <a routerLink="/login" class="btn btn-outline">Login</a>
-        <a routerLink="/registro" class="btn btn-primary">Registro</a>
-      } @else {
-        <div class="user-box">
-          <span class="welcome-text">Hola, {{ user }}</span>
-          <span class="role-badge">{{ rol }}</span>
-        </div>
-        <button type="button" (click)="logout()" class="btn btn-primary">Cerrar sesi�n</button>
+      @if (isLogged) {
+        <button
+          class="menu-btn"
+          type="button"
+          (click)="toggleSidebar()"
+          aria-label="Abrir menú">
+          <i class="fa-solid fa-bars"></i>
+        </button>
       }
+
+      <a routerLink="/" class="brand-link">
+        <div class="brand-mark">
+          <i class="fa-solid fa-scissors"></i>
+        </div>
+
+        <div class="brand-copy">
+          <span class="brand-title">Ladino Barber</span>
+          <span class="brand-subtitle">Estilo profesional</span>
+        </div>
+      </a>
+
     </div>
+
+    <!-- 
+  BLOQUE DE NAVEGACIÓN PRINCIPAL (DESACTIVADO)
+
+  Este bloque muestra el menú de navegación superior
+  cuando el usuario está autenticado (isLogged = true).
+
+  Contiene accesos rápidos a:
+  - Inicio
+  - Servicios
+  - Barberos
+  - Reservas
+
+  Actualmente se encuentra desactivado porque la navegación
+  principal se maneja desde el Sidebar (toggle menu).
+-->
+
+<!--
+@if (isLogged) {
+  <nav class="nav-panel">
+    <a routerLink="/">Inicio</a>
+    <a routerLink="/" fragment="servicios">Servicios</a>
+    <a routerLink="/" fragment="barberos">Barberos</a>
+    <a routerLink="/" fragment="reservas">Reservas</a>
+  </nav>
+}
+-->
+
+    <!-- ACCIONES -->
+    <div class="actions-section">
+
+      @if (!isLogged) {
+
+        <a routerLink="/login" class="btn btn-outline">
+          Login
+        </a>
+
+        <a routerLink="/registro" class="btn btn-primary">
+          Registro
+        </a>
+
+      } @else {
+
+        <div class="user-box">
+          <span class="welcome-text">
+            Hola, {{ user }}
+          </span>
+
+          <span class="role-badge">
+            {{ rol }}
+          </span>
+        </div>
+
+        <button
+          type="button"
+          (click)="logout()"
+          class="btn btn-primary">
+          Cerrar sesión
+        </button>
+
+      }
+
+    </div>
+
   </div>
 </header>
+
+
+<!-- SIDEBAR -->
+@if (isLogged) {
+
+  <aside class="sidebar" [class.open]="sidebarOpen">
+
+    <div class="sidebar-header">
+
+      <h3 class="sidebar-title">
+        Menú
+      </h3>
+
+      <button
+        class="sidebar-close"
+        type="button"
+        (click)="cerrarSidebar()">
+        ✕
+      </button>
+
+    </div>
+
+    <ul class="sidebar-list">
+
+      @for (link of linksFiltrados; track link.route) {
+
+        <li>
+
+          <a
+            [routerLink]="link.route"
+            (click)="cerrarSidebar()">
+
+            {{ link.label }}
+
+          </a>
+
+        </li>
+
+      }
+
+    </ul>
+
+  </aside>
+
+
+  <!-- OVERLAY -->
+  <div
+    class="overlay"
+    [class.active]="sidebarOpen"
+    (click)="cerrarSidebar()">
+  </div>
+
+}

@@ -29,9 +29,11 @@ export class Auth {
   /**
    * CREAR CUENTA
    */
-  public crearCuenta(registroDTO: any): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/registro`, registroDTO);
-  }
+  public crearCuenta(registroDTO: any): Observable<string> {
+    return this.http.post(`${this.authURL}/registro`, registroDTO, {
+    responseType: 'text'
+  });
+}
 
   /**
    * RECUPERAR CONTRASEÑA

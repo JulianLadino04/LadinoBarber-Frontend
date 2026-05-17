@@ -1,7 +1,11 @@
+import { TipoServicio } from '../enums/TipoServicio-enum';
+
 export interface EditarServicioDTO {
-  id: string
-  nombre: string
-  descripcion: string
-  precio: number
-  duracionMinutos: number
+  nombre: string;
+  descripcion: string;
+  tipo: TipoServicio;
+  precio: number;
+  duracionMinutos: number;
+  imagenUrl?: string;
+  activo?: boolean;
 }

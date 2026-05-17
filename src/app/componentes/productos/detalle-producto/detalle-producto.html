@@ -1,0 +1,27 @@
+<div class="page-shell">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="brand-icon">PB</div>
+      <h1>Detalle Producto</h1>
+    </div>
+
+    <div *ngIf="producto; else loading">
+      <p><strong>Nombre:</strong> {{producto?.nombre}}</p>
+      <p><strong>Descripción:</strong> {{producto?.descripcion}}</p>
+      <p><strong>Precio:</strong> {{producto?.precio | currency}}</p>
+      <p><strong>Stock:</strong> {{producto?.stock}}</p>
+      <p><strong>Estado:</strong> {{producto?.activo ? 'Activo' : 'Inactivo'}}</p>
+      <div class="img-wrap" *ngIf="producto?.imagenUrl"><img [src]="producto?.imagenUrl" alt="imagen producto"/></div>
+
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn" (click)="editar()">Editar</button>
+        <button class="btn" (click)="volver()">Volver</button>
+      </div>
+    </div>
+
+    <ng-template #loading>
+      <p>Cargando...</p>
+    </ng-template>
+
+  </div>
+</div>

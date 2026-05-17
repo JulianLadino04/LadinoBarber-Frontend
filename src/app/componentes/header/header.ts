@@ -28,19 +28,23 @@ export class Header implements OnInit {
 
   readonly navLinks: NavLink[] = [
 
-    { label: 'Servicios', route: '/servicios', roles: ['CLIENTE','ADMIN','BARBERO'] },
+    { label: 'Inicio', route: '/', roles: ['CLIENTE','ADMINISTRADOR','BARBERO'] },
+
+    { label: 'Servicios', route: '/servicios/crear', roles: ['CLIENTE','ADMINISTRADOR','BARBERO'] },
+
+    { label: 'Productos', route: '/productos', roles: ['CLIENTE','ADMINISTRADOR','BARBERO'] },
 
     { label: 'Barberos', route: '/barberos', roles: ['CLIENTE','ADMIN'] },
 
-    { label: 'Reservar Cita', route: '/reservar-cita', roles: ['CLIENTE'] },
+    { label: 'Reservar Cita', route: '/citas/reservar', roles: ['CLIENTE'] },
 
-    { label: 'Mis Citas', route: '/mis-citas', roles: ['CLIENTE'] },
+    { label: 'Mis Citas', route: '/citas', roles: ['CLIENTE'] },
 
-    { label: 'Agenda del Barbero', route: '/agenda-barbero', roles: ['BARBERO'] },
+    { label: 'Agenda del Barbero', route: '/barberos/agenda', roles: ['BARBERO'] },
 
-    { label: 'Administrar Citas', route: '/admin-citas', roles: ['ADMIN'] },
+    { label: 'Administrar Citas', route: '/servicios/crear', roles: ['ADMINISTRADOR'] },
 
-    { label: 'Promociones', route: '/promociones', roles: ['ADMIN'] }
+    { label: 'Promociones', route: '/productos/crear', roles: ['ADMINISTRADOR'] }
 
   ];
 
@@ -73,7 +77,12 @@ export class Header implements OnInit {
 
       const data = this.tokenService.verTokenDecodificado();
 
-      this.user = data?.nombre || data?.name || data?.sub || 'Usuario';
+      this.user =
+        data?.nombre ||
+        data?.name ||
+        data?.sub ||
+        'Usuario';
+
       this.rol = this.tokenService.getRol() || '';
 
       console.log("ROL DEL TOKEN:", this.rol);
